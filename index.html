@@ -924,13 +924,9 @@
       
         // --- Game App (UPDATED FOR MOBILE) ---
         const canvas = document.getElementById('game-canvas'), ctx = canvas.getContext('2d'), startScreen = document.getElementById('game-start-screen'), gameOverScreen = document.getElementById('game-over-screen'), startButton = document.getElementById('start-game-button'), restartButton = document.getElementById('restart-game-button'), finalScoreEl = document.getElementById('final-score');
-        const touchControls = document.getElementById('touch-controls');
-        const moveLeftBtn = document.getElementById('move-left-btn');
-        const moveRightBtn = document.getElementById('move-right-btn');
-        const shootBtn = document.getElementById('shoot-btn');
-        let player, bullets, enemies, score, lives, gameInterval = null, keys = {}, touchMoveInterval = null;
+        let player, bullets, enemies, score, lives, gameInterval = null, keys = {};
         function initGameApp() { const p = canvas.parentElement; canvas.width = p.clientWidth; canvas.height = p.clientHeight; }
-        function setupGame() { score = 0; lives = 3; player = { x: canvas.width/2 - 15, y: canvas.height - 100, width: 30, height: 20, speed: 5 }; bullets = []; enemies = []; spawnEnemy(); }
+        function setupGame() { score = 0; lives = 3; player = { x: canvas.width/2 - 15, y: canvas.height - 40, width: 30, height: 20, speed: 5 }; bullets = []; enemies = []; spawnEnemy(); }
         function spawnEnemy() { const s = 20 + Math.random() * 10, x = Math.random() * (canvas.width - s); enemies.push({ x: x, y: -s, width: s, height: s, speed: 1 + Math.random() * 2 }); }
         function gameLoop() { update(); draw(); }
         function update() {
@@ -943,56 +939,38 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#007FFF'; ctx.fillRect(player.x, player.y, player.width, player.height);
+            // UPDATED: Game bullet color
             ctx.fillStyle = '#EAEAEA'; bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height));
             ctx.fillStyle = 'red'; enemies.forEach(e => ctx.fillRect(e.x, e.y, e.width, e.height));
             ctx.fillStyle = 'white'; ctx.font = "12px 'Press Start 2P'"; ctx.fillText(`Score: ${score}`, 10, 20); 
-            ctx.fillStyle = '#ff5f56';
+            
+            // UPDATED: Draw hearts for lives instead of text
+            ctx.fillStyle = '#ff5f56'; // Red color for hearts
             for (let i = 0; i < lives; i++) {
-                const heartX = canvas.width - 30 - (i * 25); const heartY = 10; const s = 15;
-                ctx.beginPath(); ctx.moveTo(heartX, heartY + s/4); ctx.quadraticCurveTo(heartX, heartY, heartX + s/4, heartY); ctx.quadraticCurveTo(heartX + s/2, heartY, heartX + s/2, heartY + s/4); ctx.quadraticCurveTo(heartX + s/2, heartY, heartX + 3*s/4, heartY); ctx.quadraticCurveTo(heartX + s, heartY, heartX + s, heartY + s/4); ctx.quadraticCurveTo(heartX + s, heartY + s/2, heartX + 3*s/4, heartY + 3*s/4); ctx.lineTo(heartX + s/2, heartY + s); ctx.lineTo(heartX + s/4, heartY + 3*s/4); ctx.quadraticCurveTo(heartX, heartY + s/2, heartX, heartY + s/4); ctx.closePath(); ctx.fill();
+                const heartX = canvas.width - 30 - (i * 25);
+                const heartY = 10;
+                const s = 15; // Heart size
+                ctx.beginPath();
+                ctx.moveTo(heartX, heartY + s/4);
+                ctx.quadraticCurveTo(heartX, heartY, heartX + s/4, heartY);
+                ctx.quadraticCurveTo(heartX + s/2, heartY, heartX + s/2, heartY + s/4);
+                ctx.quadraticCurveTo(heartX + s/2, heartY, heartX + 3*s/4, heartY);
+                ctx.quadraticCurveTo(heartX + s, heartY, heartX + s, heartY + s/4);
+                ctx.quadraticCurveTo(heartX + s, heartY + s/2, heartX + 3*s/4, heartY + 3*s/4);
+                ctx.lineTo(heartX + s/2, heartY + s);
+                ctx.lineTo(heartX + s/4, heartY + 3*s/4);
+                ctx.quadraticCurveTo(heartX, heartY + s/2, heartX, heartY + s/4);
+                ctx.closePath();
+                ctx.fill();
             }
         }
         function shoot() { bullets.push({ x: player.x + player.width/2 - 2.5, y: player.y, width: 5, height: 10, speed: 7 }); }
-        function startGame() { if(gameInterval) return; startScreen.classList.add('hidden'); gameOverScreen.classList.add('hidden'); touchControls.classList.remove('hidden'); setupGame(); gameInterval = setInterval(gameLoop, 1000/60); }
-        function gameOver() {
-            clearInterval(gameInterval);
-            if (touchMoveInterval) clearInterval(touchMoveInterval);
-            touchMoveInterval = null;
-            gameInterval = null;
-            gameOverScreen.classList.remove('hidden');
-            gameOverScreen.classList.add('flex');
-            touchControls.classList.add('hidden');
-        }
+        function startGame() { if(gameInterval) return; startScreen.classList.add('hidden'); gameOverScreen.classList.add('hidden'); setupGame(); gameInterval = setInterval(gameLoop, 1000/60); }
+        function gameOver() { clearInterval(gameInterval); gameInterval = null; gameOverScreen.classList.remove('hidden'); gameOverScreen.classList.add('flex'); finalScoreEl.textContent = score; }
         startButton.addEventListener('click', startGame);
         restartButton.addEventListener('click', startGame);
         window.addEventListener('keydown', (e) => { keys[e.code] = true; if (e.code === 'Space' && activeApp === 'game' && gameInterval) { e.preventDefault(); shoot(); } });
         window.addEventListener('keyup', (e) => { keys[e.code] = false; });
-        
-        // --- Touch Control Listeners (REFACTORED) ---
-        function startMoving(direction) {
-            if (touchMoveInterval) clearInterval(touchMoveInterval);
-            touchMoveInterval = setInterval(() => {
-                if (direction === 'left' && player.x > 0) {
-                    player.x -= player.speed;
-                } else if (direction === 'right' && player.x < canvas.width - player.width) {
-                    player.x += player.speed;
-                }
-            }, 1000 / 60);
-        }
-
-        function stopMoving() {
-            clearInterval(touchMoveInterval);
-            touchMoveInterval = null;
-        }
-
-        canvas.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
-        moveLeftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startMoving('left'); }, { passive: false });
-        moveLeftBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopMoving(); });
-        moveLeftBtn.addEventListener('touchcancel', (e) => { e.preventDefault(); stopMoving(); });
-        moveRightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startMoving('right'); }, { passive: false });
-        moveRightBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopMoving(); });
-        moveRightBtn.addEventListener('touchcancel', (e) => { e.preventDefault(); stopMoving(); });
-        shootBtn.addEventListener('touchstart', (e) => { e.preventDefault(); if (gameInterval) shoot(); }, { passive: false });
     });
     </script>
 

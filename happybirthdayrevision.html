@@ -37,21 +37,20 @@
             justify-content: center;
             min-height: 100vh;
             padding: 1rem;
-            /* UPDATED: Soft pink gradient background */
             background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            /* FIXED: Re-enabled default cursor */
+            /* UPDATED: Hide the default system cursor */
+            cursor: none;
         }
 
-        /* ADDED: Heart follower cursor styles */
+        /* UPDATED: Heart cursor styles for perfect centering */
         #heart-cursor {
             position: fixed;
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             pointer-events: none;
-            transition: transform 0.1s ease-out;
             z-index: 9999;
-            /* Adjust origin to be above and to the left of the pointer */
-            transform-origin: top left; 
+            /* This transform centers the icon on the cursor's coordinates */
+            transform: translate(-50%, -50%);
         }
 
         #heart-cursor svg {
@@ -62,6 +61,32 @@
             stroke-width: 1.5;
             filter: drop-shadow(0 0 5px var(--glow-color));
         }
+        
+        /* ADDED: Styles for floating background images */
+        #background-images {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-image {
+            position: absolute;
+            width: 150px;
+            height: auto;
+            opacity: 0.2;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        #bg-img-1 { top: 10%; left: 5%; animation-duration: 7s; }
+        #bg-img-2 { top: 25%; right: 8%; animation-delay: -4s; animation-duration: 9s; }
+        #bg-img-3 { bottom: 15%; left: 12%; animation-delay: -2s; animation-duration: 6s; }
+        #bg-img-4 { bottom: 8%; right: 15%; animation-delay: -6s; animation-duration: 8s; }
 
 
         /* The main device container */
@@ -139,7 +164,7 @@
             border: none;
             padding: 10px 15px;
             font-family: 'Press Start 2P', cursive;
-            cursor: pointer;
+            cursor: none; /* Make buttons also use the custom cursor */
             box-shadow: 0 4px 0 #6e9900;
             transition: all 0.1s ease-in-out;
             text-shadow: none;
@@ -161,7 +186,7 @@
         }
         .nav-icon {
             color: #aaa;
-            cursor: pointer;
+            cursor: none; /* Make icons also use the custom cursor */
             transition: all 0.2s ease;
         }
         .nav-icon.active, .nav-icon:hover {
@@ -191,6 +216,12 @@
             color: #aaa;
         }
 
+        /* ADDED: Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); }
+            100% { transform: translateY(0px); }
+        }
 
         @keyframes blink {
             50% { opacity: 0; }
@@ -219,6 +250,14 @@
 </head>
 <body class="bg-gray-900 text-white">
     
+    <!-- ADDED: Floating images container -->
+    <div id="background-images">
+        <img src="birthday1.jpg" alt="Floating background image 1" class="floating-image" id="bg-img-1">
+        <img src="birthday2.jpg" alt="Floating background image 2" class="floating-image" id="bg-img-2">
+        <img src="birthday3.jpg" alt="Floating background image 3" class="floating-image" id="bg-img-3">
+        <img src="birthday4.jpg" alt="Floating background image 4" class="floating-image" id="bg-img-4">
+    </div>
+
     <!-- ADDED: Heart follower cursor -->
     <div id="heart-cursor">
         <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -299,7 +338,7 @@
                         </div>
                     </div>
                     
-                    <!-- ====== 4. GALLERY APP ====== -->
+                    <!-- ====== 4. GALLERY APP (UPDATED) ====== -->
                     <div id="app-gallery" class="app-window hidden">
                         <div class="title-bar">
                             <div class="title-bar-dots">
@@ -312,7 +351,13 @@
                         </div>
                          <div class="flex-grow overflow-y-auto p-3 h-0">
                              <div class="grid grid-cols-2 gap-3">
-                                 <!-- Gallery images will be added here by JS -->
+                                 <!-- Hardcoded local images. The JS will add the others. -->
+                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat.jpg')">
+                                    <img src="robloxwnat.jpg" alt="Gallery Photo 1" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
+                                </div>
+                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('nat.jpg')">
+                                    <img src="nat.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
+                                </div>
                              </div>
                          </div>
                     </div>
@@ -484,20 +529,11 @@
             birthdayMessage: "Dear Beautiful Soul,\n\nAnother year has painted itself across the canvas of your life, each stroke a highlight, each moment a gift of time. Today we celebrate not just your birth, but the light you bring to the world, the laughter that echoes in hearts, and the kindness that never grows old.\n\nThis new chapter of your journey unfolds with endless possibilities. May your dreams dance with reality, creating a beautiful symphony of success. May love bloom endlessly in your heart, touching every soul you encounter. May joy sparkle in every sunrise you witness, and may you always find strength in your own amazing spirit.\n\nHappy Birthday! 🎉",
 
             // The chat simulation messages in the "Message" app
-            // DELETED: Removed the pre-scripted chat to make it fully interactive from the start.
             chatMessages: [],
 
-            // Image URLs for the gallery. Use square images for best results.
-            // HOW TO USE GOOGLE DRIVE:
-            // 1. Upload your image to Google Drive.
-            // 2. Right-click > Share > Set "General access" to "Anyone with the link".
-            // 3. Copy the link. It will look like: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
-            // 4. Take the FILE_ID and put it in this format: https://drive.google.com/uc?export=view&id=FILE_ID
+            // Image URLs for the gallery. The first two are now in the HTML.
+            // The script will add the rest from this list.
             galleryImages: [
-                // UPDATED: Changed to a local file path.
-                // Make sure 'nat.jpg' is in the SAME FOLDER as this HTML file when you deploy.
-                'robloxwnat.jpg',
-                'nat.jpg',
                 'https://placehold.co/400x400/1dd1a1/black?text=Foto+5',
                 'https://placehold.co/400x400/feca57/black?text=Foto+6',
             ],
@@ -507,24 +543,19 @@
                 {
                     title: "Perfect",
                     artist: "Ed Sheeran",
-                    // IMPORTANT: Google Drive can be unreliable for audio.
-                    // THE BEST METHOD: Use a simple, direct file host.
-                    // 1. Go to https://catbox.moe
-                    // 2. Upload your .mp3 file.
-                    // 3. It will give you a direct link. Paste that link below.
-                    url: "https://files.catbox.moe/etb7mk.mp3", // <-- PASTE YOUR NEW LINK HERE
+                    url: "https://files.catbox.moe/etb7mk.mp3",
                     albumArt: "https://placehold.co/200x200/ff6b6b/ffffff?text=Perfect"
                 },
                 {
                     title: "A Thousand Years",
                     artist: "Christina Perri",
-                    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", // Replace this
+                    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
                     albumArt: "https://placehold.co/200x200/48dbfb/ffffff?text=A+Thousand+Years"
                 },
                 {
                     title: "I Will Always Love You",
                     artist: "Whitney Houston",
-                    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", // Replace this
+                    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
                     albumArt: "https://placehold.co/200x200/f368e0/ffffff?text=I+Will+Always"
                 }
             ]
@@ -537,11 +568,12 @@
         // --- Initialize Lucide Icons ---
         lucide.createIcons();
 
-        // --- Heart Cursor Logic ---
+        // --- Heart Cursor Logic (UPDATED) ---
         const heartCursor = document.getElementById('heart-cursor');
         window.addEventListener('mousemove', (e) => {
-            // Added a slight offset so the cursor tip is visible
-            heartCursor.style.transform = `translate(${e.clientX + 2}px, ${e.clientY + 2}px)`;
+            // Use left and top properties for precise positioning
+            heartCursor.style.left = e.clientX + 'px';
+            heartCursor.style.top = e.clientY + 'px';
         });
 
         // --- Element Selectors ---
@@ -549,7 +581,6 @@
         const openButton = document.getElementById('open-button');
         const mainContent = document.getElementById('main-content');
         const bottomNav = document.getElementById('bottom-nav');
-        // ADDED: Lightbox selectors
         const galleryLightbox = document.getElementById('gallery-lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeLightboxBtn = document.getElementById('close-lightbox');
@@ -565,13 +596,13 @@
             unlockScreen.style.transition = 'opacity 0.5s ease';
             unlockScreen.style.opacity = '0';
             
-            playTrack(); // Use the new robust play function
+            playTrack();
 
             setTimeout(() => {
                 unlockScreen.classList.add('hidden');
                 mainContent.classList.remove('hidden');
                 mainContent.classList.add('flex');
-                initNotesApp(); // Start with the notes app
+                initNotesApp();
             }, 500);
         });
 
@@ -579,8 +610,8 @@
         const apps = document.querySelectorAll('.app-window');
         const navIcons = document.querySelectorAll('.nav-icon');
         let activeApp = 'notes';
-        // FIXED: Added a state tracker for chat initialization
         let isChatInitialized = false;
+        let isGalleryInitialized = false; // Add a flag for the gallery
 
         function switchApp(appName) {
             apps.forEach(app => {
@@ -599,12 +630,15 @@
             });
             activeApp = appName;
             
-            // FIXED: Changed initialization logic for chat
             if (activeApp === 'message' && !isChatInitialized) {
                 initMessageApp();
                 isChatInitialized = true;
             }
-            if (activeApp === 'gallery') initGalleryApp(); // No longer need the check, the function prevents re-init
+            // MODIFIED: Only run gallery init once
+            if (activeApp === 'gallery' && !isGalleryInitialized) {
+                initGalleryApp();
+                isGalleryInitialized = true;
+            }
             if (activeApp === 'countdown') startCountdown();
             if (activeApp === 'game') initGameApp();
         }
@@ -643,20 +677,13 @@
             };
         }
 
-        // --- Message App (REFACTORED & FIXED) ---
+        // --- Message App ---
         const messageList = document.getElementById('message-list');
         const chatInput = document.getElementById('chat-input');
         const chatSendButton = document.getElementById('chat-send-button');
         const sleep = ms => new Promise(res => setTimeout(res, ms));
-
-        // UPDATED: Replaced random replies with a fixed sequence.
-        const fixedReplies = [
-            "Hai sayang!",
-            "Happy birthday to you, my love! ❤️🎂",
-            "Wishing you all the best things in life."
-        ];
+        const fixedReplies = ["Hai sayang!", "Happy birthday to you, my love! ❤️🎂", "Wishing you all the best things in life."];
         let replyCounter = 0;
-
 
         function addChatMessage(from, text) {
             const msgDiv = document.createElement('div');
@@ -664,135 +691,83 @@
             
             if (from === 'me') {
                 msgDiv.classList.add('self-start');
-                msgDiv.innerHTML = `
-                    <div class="w-6 h-6 rounded-full bg-pink-500 flex-shrink-0"></div>
-                    <div class="bg-gray-700 p-2 rounded-lg rounded-bl-none"><p class="text-sm">${text}</p></div>`;
-            } else { // from 'you'
+                msgDiv.innerHTML = `<div class="w-6 h-6 rounded-full bg-pink-500 flex-shrink-0"></div><div class="bg-gray-700 p-2 rounded-lg rounded-bl-none"><p class="text-sm">${text}</p></div>`;
+            } else {
                 msgDiv.classList.add('self-end');
-                msgDiv.innerHTML = `
-                    <div class="bg-lime-400 text-black p-2 rounded-lg rounded-br-none"><p class="text-sm">${text}</p></div>
-                    <div class="w-6 h-6 rounded-full bg-blue-500 flex-shrink-0"></div>`;
+                msgDiv.innerHTML = `<div class="bg-lime-400 text-black p-2 rounded-lg rounded-br-none"><p class="text-sm">${text}</p></div><div class="w-6 h-6 rounded-full bg-blue-500 flex-shrink-0"></div>`;
             }
             messageList.appendChild(msgDiv);
-            
-            // Trigger fade-in
             setTimeout(() => msgDiv.classList.remove('opacity-0'), 50);
             messageList.scrollTop = messageList.scrollHeight;
         }
-
-        function showTypingIndicator() {
-            const typingDiv = document.createElement('div');
-            typingDiv.id = 'typing-indicator';
-            typingDiv.classList.add('flex', 'items-end', 'gap-2', 'max-w-[80%]', 'self-start');
-            typingDiv.innerHTML = `
-                <div class="w-6 h-6 rounded-full bg-pink-500 flex-shrink-0"></div>
-                <div class="bg-gray-700 p-3 rounded-lg rounded-bl-none">
-                    <div class="flex items-center gap-1">
-                        <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0s;"></span>
-                        <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></span>
-                        <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></span>
-                    </div>
-                </div>`;
-            messageList.appendChild(typingDiv);
-            messageList.scrollTop = messageList.scrollHeight;
-        }
-
-        function removeTypingIndicator() {
-            document.getElementById('typing-indicator')?.remove();
-        }
-
+        
         async function handleSendMessage() {
             const text = chatInput.value.trim();
             if (text === '') return;
-
             addChatMessage('you', text);
             chatInput.value = '';
             chatInput.disabled = true;
             chatSendButton.disabled = true;
 
-            // UPDATED: Logic to send the next message from the fixed sequence.
             if (replyCounter < fixedReplies.length) {
                 await sleep(1000);
-                showTypingIndicator();
-                await sleep(1500);
-                removeTypingIndicator();
-                
-                const reply = fixedReplies[replyCounter];
-                addChatMessage('me', reply);
-                
-                replyCounter++; // Move to the next reply for the next time.
+                addChatMessage('me', fixedReplies[replyCounter]);
+                replyCounter++;
             }
-            // After the sequence is done, the bot will no longer reply.
             
             chatInput.disabled = false;
             chatSendButton.disabled = false;
             chatInput.focus();
         }
 
-        // DELETED: The intro conversation is no longer needed.
-        
-        // This function now just sets up the app
         function initMessageApp() {
-            // Add event listeners ONCE
             chatSendButton.addEventListener('click', handleSendMessage);
-            chatInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSendMessage();
-                }
-            });
-            // UPDATED: Enable the chat right away.
+            chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); handleSendMessage(); } });
             chatInput.disabled = false;
             chatSendButton.disabled = false;
             chatInput.placeholder = 'Type your message...';
             chatInput.focus();
         }
         
-        // --- Gallery App (UPDATED WITH LIGHTBOX) ---
+        // --- Gallery App (UPDATED) ---
+        // This function now only adds images from the CONFIG array, not the hardcoded ones.
         function initGalleryApp() {
             const galleryGrid = document.querySelector('#app-gallery .grid');
-            if (galleryGrid.hasChildNodes()) return; // Don't re-initialize
-
-            galleryGrid.innerHTML = ''; // Clear previous images
+            
             CONFIG.galleryImages.forEach(url => {
                 const imgContainer = document.createElement('div');
                 imgContainer.className = "w-full h-full cursor-pointer";
                 imgContainer.innerHTML = `<img src="${url}" alt="Gallery Photo" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">`;
                 
-                // Add click listener for lightbox
-                imgContainer.addEventListener('click', () => {
-                    lightboxImg.src = url;
-                    galleryLightbox.classList.remove('hidden');
-                    // Trigger fade-in and scale-up animations
-                    setTimeout(() => {
-                        galleryLightbox.classList.remove('opacity-0');
-                        lightboxImg.classList.remove('scale-95');
-                    }, 10);
-                });
+                imgContainer.addEventListener('click', () => openLightbox(url));
                 
                 galleryGrid.appendChild(imgContainer);
             });
         }
         
-        // --- Lightbox Close Logic ---
+        // --- Lightbox Logic (UPDATED) ---
+        // Made this a global function to be called from HTML onclick
+        window.openLightbox = function(url) {
+            lightboxImg.src = url;
+            galleryLightbox.classList.remove('hidden');
+            setTimeout(() => {
+                galleryLightbox.classList.remove('opacity-0');
+                lightboxImg.classList.remove('scale-95');
+            }, 10);
+        }
+        
         function closeLightbox() {
             galleryLightbox.classList.add('opacity-0');
             lightboxImg.classList.add('scale-95');
             setTimeout(() => {
                 galleryLightbox.classList.add('hidden');
-                lightboxImg.src = ""; // Clear src to prevent flash of old image
+                lightboxImg.src = "";
             }, 300);
         }
-
         closeLightboxBtn.addEventListener('click', closeLightbox);
-        galleryLightbox.addEventListener('click', (e) => {
-            // Close only if the backdrop is clicked, not the image itself
-            if (e.target === galleryLightbox) {
-                closeLightbox();
-            }
-        });
+        galleryLightbox.addEventListener('click', (e) => { if (e.target === galleryLightbox) closeLightbox(); });
 
-        // --- Music App (with Playlist) ---
+        // --- Music App ---
         const audioPlayer = document.getElementById('audio-player');
         const playBtn = document.getElementById('music-play');
         const prevBtn = document.getElementById('music-prev');
@@ -809,7 +784,6 @@
         const closePlaylistButton = document.getElementById('close-playlist-button');
         const musicPlaylistOverlay = document.getElementById('music-playlist-overlay');
         const musicPlaylistList = document.getElementById('music-playlist-list');
-
         let currentTrackIndex = 0;
 
         function loadTrack(index, shouldPlay = false) {
@@ -820,12 +794,8 @@
             artistEl.textContent = track.artist;
             albumArtEl.src = track.albumArt;
             updatePlaylistUI();
-
-            audioPlayer.oncanplaythrough = () => {
-                if (shouldPlay) playTrack();
-            };
+            audioPlayer.oncanplaythrough = () => { if (shouldPlay) playTrack(); };
         }
-
         function playTrack() {
             const playPromise = audioPlayer.play();
             if (playPromise !== undefined) {
@@ -835,13 +805,11 @@
                 }).catch(error => console.error("Audio playback error:", error));
             }
         }
-
         function pauseTrack() {
             audioPlayer.pause();
             playIcon.classList.remove('hidden');
             pauseIcon.classList.add('hidden');
         }
-        
         function populatePlaylist() {
             musicPlaylistList.innerHTML = '';
             CONFIG.playlist.forEach((song, index) => {
@@ -853,23 +821,17 @@
             });
             updatePlaylistUI();
         }
-        
         function updatePlaylistUI() {
-             musicPlaylistList.querySelectorAll('li').forEach((li, index) => {
-                li.classList.toggle('active', index === currentTrackIndex);
-            });
+             musicPlaylistList.querySelectorAll('li').forEach((li, index) => li.classList.toggle('active', index === currentTrackIndex));
         }
-
         playlistToggleButton.addEventListener('click', () => {
             musicPlaylistOverlay.classList.remove('hidden');
             setTimeout(() => musicPlaylistOverlay.classList.remove('opacity-0'), 10);
         });
-
         closePlaylistButton.addEventListener('click', () => {
             musicPlaylistOverlay.classList.add('opacity-0');
             setTimeout(() => musicPlaylistOverlay.classList.add('hidden'), 300);
         });
-        
         musicPlaylistList.addEventListener('click', (e) => {
             const li = e.target.closest('li');
             if (li && li.dataset.index) {
@@ -877,8 +839,6 @@
                 closePlaylistButton.click();
             }
         });
-
-
         playBtn.addEventListener('click', () => (audioPlayer.paused ? playTrack() : pauseTrack()));
         nextBtn.addEventListener('click', () => loadTrack((currentTrackIndex + 1) % CONFIG.playlist.length, true));
         prevBtn.addEventListener('click', () => loadTrack((currentTrackIndex - 1 + CONFIG.playlist.length) % CONFIG.playlist.length, true));
@@ -887,181 +847,69 @@
             progress.value = (currentTime / duration) * 100 || 0;
             currentTimeEl.textContent = formatTime(currentTime);
         });
-        audioPlayer.addEventListener('loadedmetadata', () => {
-            durationEl.textContent = formatTime(audioPlayer.duration);
-        });
+        audioPlayer.addEventListener('loadedmetadata', () => { durationEl.textContent = formatTime(audioPlayer.duration); });
         audioPlayer.addEventListener('ended', () => nextBtn.click());
-        progress.addEventListener('input', () => {
-            audioPlayer.currentTime = (progress.value / 100) * audioPlayer.duration;
-        });
-
+        progress.addEventListener('input', () => { audioPlayer.currentTime = (progress.value / 100) * audioPlayer.duration; });
         function formatTime(seconds) {
             const min = Math.floor(seconds / 60);
             const sec = Math.floor(seconds % 60);
             return `${min}:${sec < 10 ? '0' : ''}${sec}`;
         }
-        
         loadTrack(currentTrackIndex);
         populatePlaylist();
         
         // --- Countdown App ---
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
-        const digitalClockEl = document.getElementById('digital-clock');
-        const currentDateEl = document.getElementById('current-date');
-        const countdownCompleteEl = document.getElementById('countdown-complete');
+        const daysEl = document.getElementById('days'), hoursEl = document.getElementById('hours'), minutesEl = document.getElementById('minutes'), secondsEl = document.getElementById('seconds'), digitalClockEl = document.getElementById('digital-clock'), currentDateEl = document.getElementById('current-date'), countdownCompleteEl = document.getElementById('countdown-complete');
         let countdownInterval;
-
         function startCountdown() {
             if (countdownInterval) clearInterval(countdownInterval);
-            
             function update() {
                 const now = new Date();
                 digitalClockEl.textContent = now.toLocaleTimeString('it-IT');
                 currentDateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                 const distance = CONFIG.birthdayDate.getTime() - now.getTime();
-                
                 if (distance < 0) {
                     clearInterval(countdownInterval);
                     countdownCompleteEl.classList.remove('hidden');
                     document.querySelector('#app-countdown .grid').classList.add('hidden');
                     return;
                 }
-
-                daysEl.textContent = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-                hoursEl.textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-                minutesEl.textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-                secondsEl.textContent = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+                daysEl.textContent = Math.floor(distance / 864e5).toString().padStart(2, '0');
+                hoursEl.textContent = Math.floor((distance % 864e5) / 36e5).toString().padStart(2, '0');
+                minutesEl.textContent = Math.floor((distance % 36e5) / 6e4).toString().padStart(2, '0');
+                secondsEl.textContent = Math.floor((distance % 6e4) / 1000).toString().padStart(2, '0');
             }
             update();
             countdownInterval = setInterval(update, 1000);
         }
 
-        // --- Game App (FIXED) ---
-        const canvas = document.getElementById('game-canvas');
-        const ctx = canvas.getContext('2d');
-        const startScreen = document.getElementById('game-start-screen');
-        const gameOverScreen = document.getElementById('game-over-screen');
-        const startButton = document.getElementById('start-game-button');
-        const restartButton = document.getElementById('restart-game-button');
-        const finalScoreEl = document.getElementById('final-score');
-        
-        let player, bullets, enemies, score, lives, gameInterval = null;
-        let keys = {};
-
-        function initGameApp() {
-            const parent = canvas.parentElement;
-            canvas.width = parent.clientWidth;
-            canvas.height = parent.clientHeight;
-        }
-
-        function setupGame() {
-            score = 0;
-            lives = 3;
-            player = { x: canvas.width / 2 - 15, y: canvas.height - 40, width: 30, height: 20, speed: 5 };
-            bullets = [];
-            enemies = [];
-            spawnEnemy();
-        }
-        
-        function spawnEnemy() {
-            const size = 20 + Math.random() * 10;
-            const x = Math.random() * (canvas.width - size);
-            enemies.push({ x: x, y: -size, width: size, height: size, speed: 1 + Math.random() * 2 });
-        }
-
-        function gameLoop() {
-            update();
-            draw();
-        }
-
+        // --- Game App ---
+        const canvas = document.getElementById('game-canvas'), ctx = canvas.getContext('2d'), startScreen = document.getElementById('game-start-screen'), gameOverScreen = document.getElementById('game-over-screen'), startButton = document.getElementById('start-game-button'), restartButton = document.getElementById('restart-game-button'), finalScoreEl = document.getElementById('final-score');
+        let player, bullets, enemies, score, lives, gameInterval = null, keys = {};
+        function initGameApp() { const p = canvas.parentElement; canvas.width = p.clientWidth; canvas.height = p.clientHeight; }
+        function setupGame() { score = 0; lives = 3; player = { x: canvas.width/2 - 15, y: canvas.height - 40, width: 30, height: 20, speed: 5 }; bullets = []; enemies = []; spawnEnemy(); }
+        function spawnEnemy() { const s = 20 + Math.random() * 10, x = Math.random() * (canvas.width - s); enemies.push({ x: x, y: -s, width: s, height: s, speed: 1 + Math.random() * 2 }); }
+        function gameLoop() { update(); draw(); }
         function update() {
-            // Player movement
             if (keys['ArrowLeft'] && player.x > 0) player.x -= player.speed;
             if (keys['ArrowRight'] && player.x < canvas.width - player.width) player.x += player.speed;
-
-            // Bullets movement and collision
-            bullets.forEach((bullet, bIndex) => {
-                bullet.y -= bullet.speed;
-                if (bullet.y < 0) bullets.splice(bIndex, 1);
-
-                enemies.forEach((enemy, eIndex) => {
-                    if (bullet.x < enemy.x + enemy.width && bullet.x + bullet.width > enemy.x &&
-                        bullet.y < enemy.y + enemy.height && bullet.y + bullet.height > enemy.y) {
-                        if (bullets[bIndex]) bullets.splice(bIndex, 1);
-                        enemies.splice(eIndex, 1);
-                        score += 10;
-                        spawnEnemy();
-                    }
-                });
-            });
-            
-            // Enemies movement and collision
-            enemies.forEach((enemy, eIndex) => {
-                enemy.y += enemy.speed;
-                if (enemy.y > canvas.height) {
-                    enemies.splice(eIndex, 1);
-                    lives--;
-                    spawnEnemy();
-                }
-                 if (player.x < enemy.x + enemy.width && player.x + player.width > enemy.x &&
-                    player.y < enemy.y + enemy.height && player.y + player.height > enemy.y) {
-                        lives--;
-                        enemies.splice(eIndex, 1);
-                        spawnEnemy();
-                 }
-            });
-            
+            bullets.forEach((b, bi) => { b.y -= b.speed; if (b.y < 0) bullets.splice(bi, 1); enemies.forEach((e, ei) => { if (b.x < e.x + e.width && b.x + b.width > e.x && b.y < e.y + e.height && b.y + b.height > e.y) { if(bullets[bi]) bullets.splice(bi, 1); enemies.splice(ei, 1); score += 10; spawnEnemy(); } }); });
+            enemies.forEach((e, i) => { e.y += e.speed; if (e.y > canvas.height) { enemies.splice(i, 1); lives--; spawnEnemy(); } if (player.x < e.x + e.width && player.x + player.width > e.x && player.y < e.y + e.height && player.y + player.height > e.y) { lives--; enemies.splice(i, 1); spawnEnemy(); } });
             if (lives <= 0) gameOver();
         }
-        
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#a8ff00';
-            ctx.fillRect(player.x, player.y, player.width, player.height);
-            ctx.fillStyle = '#ff1e7c';
-            bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height));
-            ctx.fillStyle = 'red';
-            enemies.forEach(e => ctx.fillRect(e.x, e.y, e.width, e.height));
-            ctx.fillStyle = 'white';
-            ctx.font = "12px 'Press Start 2P'";
-            ctx.fillText(`Score: ${score}`, 10, 20);
-            ctx.fillText(`Lives: ${lives}`, canvas.width - 80, 20);
+            ctx.fillStyle = '#a8ff00'; ctx.fillRect(player.x, player.y, player.width, player.height);
+            ctx.fillStyle = '#ff1e7c'; bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height));
+            ctx.fillStyle = 'red'; enemies.forEach(e => ctx.fillRect(e.x, e.y, e.width, e.height));
+            ctx.fillStyle = 'white'; ctx.font = "12px 'Press Start 2P'"; ctx.fillText(`Score: ${score}`, 10, 20); ctx.fillText(`Lives: ${lives}`, canvas.width - 80, 20);
         }
-
-        function shoot() {
-            bullets.push({ x: player.x + player.width / 2 - 2.5, y: player.y, width: 5, height: 10, speed: 7 });
-        }
-        
-        function startGame() {
-            if(gameInterval) return;
-            startScreen.classList.add('hidden');
-            gameOverScreen.classList.add('hidden');
-            setupGame();
-            gameInterval = setInterval(gameLoop, 1000 / 60);
-        }
-        
-        function gameOver() {
-            clearInterval(gameInterval);
-            gameInterval = null;
-            gameOverScreen.classList.remove('hidden');
-            gameOverScreen.classList.add('flex');
-            finalScoreEl.textContent = score;
-        }
-
+        function shoot() { bullets.push({ x: player.x + player.width/2 - 2.5, y: player.y, width: 5, height: 10, speed: 7 }); }
+        function startGame() { if(gameInterval) return; startScreen.classList.add('hidden'); gameOverScreen.classList.add('hidden'); setupGame(); gameInterval = setInterval(gameLoop, 1000/60); }
+        function gameOver() { clearInterval(gameInterval); gameInterval = null; gameOverScreen.classList.remove('hidden'); gameOverScreen.classList.add('flex'); finalScoreEl.textContent = score; }
         startButton.addEventListener('click', startGame);
         restartButton.addEventListener('click', startGame);
-        
-        window.addEventListener('keydown', (e) => { 
-            keys[e.code] = true;
-            // FIXED: Shoot only when game is active
-            if (e.code === 'Space' && activeApp === 'game' && gameInterval) {
-                 e.preventDefault();
-                 shoot();
-            }
-        });
+        window.addEventListener('keydown', (e) => { keys[e.code] = true; if (e.code === 'Space' && activeApp === 'game' && gameInterval) { e.preventDefault(); shoot(); } });
         window.addEventListener('keyup', (e) => { keys[e.code] = false; });
     });
     </script>

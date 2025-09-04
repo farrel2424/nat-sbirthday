@@ -5,31 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday!</title>
     
-    <!-- Tailwind CSS  -->
+    <!-- Tailwind CSS for rapid, responsive styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts for the pixelated aesthetic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons (vanilla JS version) -->
+    <!-- Lucide Icons for modern, clean icons (vanilla JS version) -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Custom styles  */
+        /* Custom styles to match the retro theme */
         :root {
-            --hot-pink: #ff1e7c;
-            --lime-green: #a8ff00;
+            /* UPDATED: Changed colors to a Nightwing theme */
+            --hot-pink: #00529B; /* Nightwing Blue */
+            --lime-green: #EAEAEA; /* Light Gray/White */
             --dark-purple: #1e0f33;
             --dark-blue: #0d0d2b;
-            --glow-color: rgba(255, 30, 124, 0.5);
-            --green-glow-color: rgba(168, 255, 0, 0.5);
+            --glow-color: rgba(0, 115, 207, 0.6); /* Blue Glow */
+            --green-glow-color: rgba(234, 234, 234, 0.5); /* White Glow */
         }
 
         body {
             font-family: 'Press Start 2P', cursive;
-            background-color: var(--dark-blue);
             color: white;
             overflow: hidden;
             display: flex;
@@ -37,12 +37,15 @@
             justify-content: center;
             min-height: 100vh;
             padding: 1rem;
-            background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            
+            /* UPDATED: Set a single Nightwing image as the full-page background */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.alphacoders.com/133/1338347.jpeg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
             cursor: none;
         }
 
-        /* UPDATED: Heart cursor styles for perfect centering */
+        /* UPDATED: Nightwing cursor styles */
         #heart-cursor {
             position: fixed;
             width: 30px;
@@ -56,42 +59,13 @@
             width: 100%;
             height: 100%;
             fill: var(--hot-pink);
-            stroke: white;
-            stroke-width: 1.5;
             filter: drop-shadow(0 0 5px var(--glow-color));
         }
         
-        /* Styles for floating background images */
-        #background-images {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .floating-image {
-            position: absolute;
-            width: 300px;
-            height: 200px;
-            opacity: 0.7;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            animation: float 8s ease-in-out infinite;
-        }
-
-        #bg-img-1 { top: 10%; left: 5%; animation-duration: 7s; }
-        #bg-img-2 { top: 25%; right: 8%; animation-delay: -4s; animation-duration: 9s; }
-        #bg-img-3 { bottom: 15%; left: 12%; animation-delay: -2s; animation-duration: 6s; }
-        #bg-img-4 { bottom: 8%; right: 15%; animation-delay: -6s; animation-duration: 8s; }
-
-
-        /* Main device container */
+        /* The main device container */
         #device {
             background-color: var(--hot-pink);
-            border: 4px solid #f86ab0;
+            border: 4px solid #007FFF;
             border-radius: 40px;
             width: 100%;
             max-width: 420px;
@@ -104,7 +78,7 @@
             transition: all 0.3s ease;
         }
 
-        /* Screen of the device */
+        /* The screen of the device */
         #screen {
             background-color: #000;
             border: 3px solid #333;
@@ -116,7 +90,7 @@
             flex-direction: column;
         }
         
-        /* General styling */
+        /* General styling for each "app" window */
         .app-window {
             background-color: #0c0c0c;
             display: flex;
@@ -125,7 +99,7 @@
             animation: fadeIn 0.5s ease;
         }
         
-        /* Title bar */
+        /* Title bar for each app window */
         .title-bar {
             background-color: #222;
             padding: 6px 10px;
@@ -164,13 +138,13 @@
             padding: 10px 15px;
             font-family: 'Press Start 2P', cursive;
             cursor: none; /* Make buttons also use the custom cursor */
-            box-shadow: 0 4px 0 #6e9900;
+            box-shadow: 0 4px 0 #8c8c8c;
             transition: all 0.1s ease-in-out;
             text-shadow: none;
         }
         .pixel-button:active {
             transform: translateY(4px);
-            box-shadow: 0 0 0 #6e9900;
+            box-shadow: 0 0 0 #8c8c8c;
         }
         
         /* Bottom navigation bar */
@@ -185,7 +159,7 @@
         }
         .nav-icon {
             color: #aaa;
-            cursor: none; 
+            cursor: none; /* Make icons also use the custom cursor */
             transition: all 0.2s ease;
         }
         .nav-icon.active, .nav-icon:hover {
@@ -214,14 +188,7 @@
             font-size: 0.7rem;
             color: #aaa;
         }
-
-        /* ADDED: Floating animation */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-25px); }
-            100% { transform: translateY(0px); }
-        }
-
+        
         @keyframes blink {
             50% { opacity: 0; }
         }
@@ -242,24 +209,16 @@
             background: var(--lime-green);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #d4ff73;
+            background: #ffffff;
         }
 
     </style>
 </head>
 <body class="bg-gray-900 text-white">
     
-    <!-- ADDED: Floating images container -->
-    <div id="background-images">
-        <img src="natbackg1.jpg" alt="Floating background image 1" class="floating-image" id="bg-img-1">
-        <img src="natbackg2.jpg" alt="Floating background image 2" class="floating-image" id="bg-img-2">
-        <img src="natbackg3.jpg" alt="Floating background image 3" class="floating-image" id="bg-img-3">
-        <img src="natbackg4.jpg" alt="Floating background image 4" class="floating-image" id="bg-img-4">
-    </div>
-
-    <!-- ADDED: Heart follower cursor -->
+    <!-- UPDATED: Nightwing logo cursor -->
     <div id="heart-cursor">
-        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M247.31,128c0,66-103.31,119-119.31,119S9,194,9,128,128,9,128,9,247.31,62,247.31,128Z"/></svg>
     </div>
 
 
@@ -267,21 +226,26 @@
     <div id="device">
         <div id="screen">
             
-            <!-- ====== 1. UNLOCK SCREEN (Initial View) ====== -->
-            <div id="unlock-screen" class="app-window flex flex-col items-center justify-between p-6 bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('nightwing.jpg');">
+            <!-- ====== 1. UNLOCK SCREEN (Initial View) - REFACTORED FOR CENTERING ====== -->
+            <div id="unlock-screen" class="app-window flex flex-col p-6 bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('./nightwing.jpg');">
+                <!-- Top section -->
                 <div class="text-center">
                     <h1 id="unlock-title" class="text-2xl md:text-3xl text-white font-bold mb-2" style="text-shadow: 0 0 10px var(--glow-color);">Message For You</h1>
                     <p id="unlock-recipient" class="text-lg text-gray-300">...</p>
                 </div>
                 
-                <div class="text-center">
-                    <p id="unlock-date" class="text-sm text-gray-400 mb-6">September 7, 2025</p>
-                    <button id="open-button" class="pixel-button text-xl rounded-md flex justify-center items-center gap-2 mx-auto w-40">
-                        <i data-lucide="mail-open"></i>
-                        OPEN
-                    </button>
+                <!-- Middle section that grows to push other content to top/bottom -->
+                <div class="flex-grow flex flex-col items-center justify-center">
+                    <div class="text-center">
+                        <p id="unlock-date" class="text-sm text-gray-400 mb-6">September 7, 2025</p>
+                        <button id="open-button" class="pixel-button text-xl rounded-md flex items-center gap-2">
+                            <i data-lucide="mail-open"></i>
+                            OPEN
+                        </button>
+                    </div>
                 </div>
 
+                <!-- Bottom section -->
                  <div class="w-full text-center">
                     <p class="text-xs text-gray-500">From: <span id="unlock-sender"></span></p>
                 </div>
@@ -303,11 +267,12 @@
                             <i data-lucide="chevrons-left" class="text-lime-400 w-4 h-4"></i>
                         </div>
                         <div id="notes-content" class="p-4 text-lime-400 text-sm md:text-base leading-relaxed overflow-y-auto flex-grow h-0">
-                           
+                           <!-- JS will populate this with a typewriter effect -->
                         </div>
-                        <div class="p-2 border-t-2 border-lime-400 flex justify-center gap-4">
-                            <button id="play-notes-button" class="pixel-button rounded-sm text-sm">PLAY</button>
-                            <button id="skip-notes-button" class="pixel-button bg-gray-500 shadow-gray-700 rounded-sm text-sm">SKIP</button>
+                        <div class="p-2 border-t-2 border-lime-400 flex justify-center gap-2">
+                            <!-- GEMINI API: Listen and Rewrite buttons added -->
+                            <button id="listen-notes-button" class="pixel-button rounded-sm text-sm flex items-center gap-1">✨ LISTEN</button>
+                            <button id="rewrite-notes-button" class="pixel-button rounded-sm text-sm flex items-center gap-1">✨ REWRITE</button>
                         </div>
                     </div>
                     
@@ -322,13 +287,12 @@
                             <span class="title-bar-text">ChatterBox</span>
                             <i data-lucide="message-square" class="text-lime-400 w-4 h-4"></i>
                         </div>
-                        <!-- FIXED: Added flex and flex-col to enable proper alignment of messages -->
                         <div id="message-list" class="flex flex-col flex-grow p-3 space-y-4 overflow-y-auto h-0">
+                            <!-- Messages will be added here by JS -->
                         </div>
                         <div class="p-2 border-t-2 border-lime-400">
                            <div class="bg-gray-800 border border-lime-400 rounded-md flex items-center p-1">
                                 <input type="text" id="chat-input" placeholder="Initializing chat..." disabled class="bg-transparent w-full text-lime-400 text-sm focus:outline-none px-2">
-                                <!-- UPDATED: Added send icon to button -->
                                 <button id="chat-send-button" class="pixel-button rounded-sm text-sm py-1 px-3" disabled>
                                     <i data-lucide="send-horizontal" class="w-4 h-4"></i>
                                 </button>
@@ -349,36 +313,12 @@
                         </div>
                          <div class="flex-grow overflow-y-auto p-3 h-0">
                              <div class="grid grid-cols-2 gap-3">
-                                 <!-- Hardcoded local images.-->
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat.jpg')">
-                                    <img src="robloxwnat.jpg" alt="Gallery Photo 1" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
+                                <!-- Hardcoded local images. The JS will add the others. -->
+                                <div class="w-full h-full cursor-none" onclick="openLightbox('./robloxwnat.jpg')">
+                                    <img src="./robloxwnat.jpg" alt="Gallery Photo 1" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-[var(--hot-pink)] transition-all duration-200">
                                 </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat2.jpg')">
-                                    <img src="robloxwnat2.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
-                                </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat3.jpg')">
-                                    <img src="robloxwnat3.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
-                                </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat4.jpg')">
-                                    <img src="robloxwnat4.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
-                                </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat5.jpg')">
-                                    <img src="robloxwnat5.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
-                                </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat6.jpg')">
-                                    <img src="robloxwnat6.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
-                                </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat7.jpg')">
-                                    <img src="robloxwnat7.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
-                                </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat8.jpg')">
-                                    <img src="robloxwnat8.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
-                                </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat9.jpg')">
-                                    <img src="robloxwnat9.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
-                                </div>
-                                <div class="w-full h-full cursor-pointer" onclick="openLightbox('robloxwnat10.jpg')">
-                                    <img src="robloxwnat10.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">
+                                <div class="w-full h-full cursor-none" onclick="openLightbox('./nat.jpg')">
+                                    <img src="./nat.jpg" alt="Gallery Photo 2" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-[var(--hot-pink)] transition-all duration-200">
                                 </div>
                              </div>
                          </div>
@@ -393,20 +333,18 @@
                                 <div class="dot dot-green"></div>
                             </div>
                             <span class="title-bar-text">BeatBox</span>
-                            <!-- UPDATED: Added Playlist Button -->
                             <button id="playlist-toggle-button" class="bg-transparent border-none text-lime-400">
                                <i data-lucide="list-music" class="w-5 h-5"></i>
                             </button>
                         </div>
-                        <!-- UPDATED: Added relative positioning for overlay -->
                         <div class="flex-grow relative">
                             <div class="p-4 flex flex-col items-center justify-center text-center h-full">
-                                <img id="music-album-art" src="https://placehold.co/200x200/ff1e7c/ffffff?text=Song" alt="Album Art" class="w-40 h-40 rounded-md mb-4 border-4 border-gray-600">
+                                <img id="music-album-art" src="https://placehold.co/200x200/00529B/ffffff?text=Song" alt="Album Art" class="w-40 h-40 rounded-md mb-4 border-4 border-gray-600">
                                 <h2 id="music-title" class="text-lg text-lime-400">Song Title</h2>
                                 <p id="music-artist" class="text-sm text-gray-400 mb-4">Artist Name</p>
 
                                 <div class="w-full max-w-xs">
-                                    <input type="range" id="music-progress" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer" value="0">
+                                    <input type="range" id="music-progress" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-none" value="0">
                                     <div class="flex justify-between text-xs text-gray-400 mt-1">
                                         <span id="music-current-time">0:00</span>
                                         <span id="music-duration">0:00</span>
@@ -415,7 +353,7 @@
 
                                 <div class="flex items-center gap-6 mt-4">
                                     <button id="music-prev" class="text-gray-400 hover:text-white"><i data-lucide="skip-back" class="w-8 h-8"></i></button>
-                                    <button id="music-play" class="bg-lime-400 text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg shadow-lime-900">
+                                    <button id="music-play" class="bg-lime-400 text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg shadow-blue-900">
                                         <i data-lucide="play" id="play-icon" class="w-8 h-8 fill-black"></i>
                                         <i data-lucide="pause" id="pause-icon" class="w-8 h-8 fill-black hidden"></i>
                                     </button>
@@ -423,14 +361,13 @@
                                 </div>
                             </div>
                             
-                            <!-- ADDED: Playlist Overlay -->
                             <div id="music-playlist-overlay" class="absolute inset-0 bg-black/90 backdrop-blur-sm p-3 flex-col hidden opacity-0">
                                 <div class="flex justify-between items-center mb-2 flex-shrink-0">
                                      <h3 class="text-lime-400 text-sm">PLAYLIST</h3>
                                      <button id="close-playlist-button"><i data-lucide="x" class="w-5 h-5"></i></button>
                                 </div>
                                 <ul id="music-playlist-list" class="flex-grow overflow-y-auto list-none p-0 m-0">
-                                
+                                    <!-- Playlist items will be populated by JS -->
                                 </ul>
                             </div>
                         </div>
@@ -489,6 +426,18 @@
                                 <p class="text-white mb-2">Final Score: <span id="final-score">0</span></p>
                                 <button id="restart-game-button" class="pixel-button rounded-sm">RESTART</button>
                              </div>
+                             <!-- ADDED: On-screen controls for mobile -->
+                            <div id="touch-controls" class="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center hidden">
+                                <button id="move-left-btn" class="p-4 bg-white/20 rounded-full text-white active:bg-white/40">
+                                    <i data-lucide="arrow-left" class="w-8 h-8 pointer-events-none"></i>
+                                </button>
+                                <button id="shoot-btn" class="p-6 bg-red-500/50 rounded-full text-white active:bg-red-500/70">
+                                    <i data-lucide="crosshair" class="w-10 h-10 pointer-events-none"></i>
+                                </button>
+                                <button id="move-right-btn" class="p-4 bg-white/20 rounded-full text-white active:bg-white/40">
+                                    <i data-lucide="arrow-right" class="w-8 h-8 pointer-events-none"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -530,86 +479,77 @@
         </button>
     </div>
 
+    <!-- GEMINI API: Loading Modal -->
+    <div id="loading-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex-col items-center justify-center p-4 hidden z-50">
+        <div class="text-lime-400 text-lg mb-4" id="loading-text">Generating...</div>
+        <div class="w-16 h-16 border-4 border-lime-400 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+        // ===================================================================================
         // ====== ⚙️ CUSTOMIZATION AREA ⚙️ ======
+        // ====== Edit the values below to personalize the website! ======
+        // ===================================================================================
         const CONFIG = {
             // Recipient's Name
-            recipientName: "Salsabila Natasya",
+            recipientName: "My Love",
 
+            // Your Name
+            senderName: "Your Secret Admirer",
             
-            senderName: "Farrel",
-            
-            // Birthday Date (YYYY, MM-1, DD) 
-            birthdayDate: new Date(2025, 8, 5), // Month is 0-indexed (0=Jan, 1=Feb, etc.)
+            // Birthday Date (YYYY, MM-1, DD) - e.g., for Sept 5, use (2025, 8, 5)
+            birthdayDate: new Date(2025, 8, 5), // Month is 0-indexed (0=Jan, 8=Sept)
             
             // The main message in the "Notes" app
-            birthdayMessage: "What a Beautiful Soul You Are,\n\nHappy birthday to my favorite person in the universe 💫 You make ordinary days feel like magic, and my world feels softer, warmer, brighter just because you are in it. Here is to more laughs, late-night talks, and dreams \n\n I Love You and Happy Birthday! 🎉",
+            birthdayMessage: "Dear Beautiful Soul,\n\nAnother year has painted itself across the canvas of your life, each stroke a highlight, each moment a gift of time. Today we celebrate not just your birth, but the light you bring to the world, the laughter that echoes in hearts, and the kindness that never grows old.\n\nThis new chapter of your journey unfolds with endless possibilities. May your dreams dance with reality, creating a beautiful symphony of success. May love bloom endlessly in your heart, touching every soul you encounter. May joy sparkle in every sunrise you witness, and may you always find strength in your own amazing spirit.\n\nHappy Birthday! 🎉",
 
-            
+            // The chat simulation messages in the "Message" app
             chatMessages: [],
 
-            
+            // Image URLs for the gallery. The first two are now in the HTML.
+            // The script will add the rest from this list.
             galleryImages: [
-                
+                'https://placehold.co/400x400/00529B/black?text=Nightwing+1',
+                'https://placehold.co/400x400/007FFF/black?text=Nightwing+2',
             ],
 
             // Music playlist for the "Music" app
             playlist: [
                 {
-                    title: "Nothing",
-                    artist: "Bruno Major",
+                    title: "Perfect",
+                    artist: "Ed Sheeran",
+                    // UPDATED: Album art to match theme
+                    albumArt: "https://placehold.co/200x200/00529B/ffffff?text=Perfect",
                     url: "https://files.catbox.moe/etb7mk.mp3",
-                    albumArt: "https://placehold.co/200x200/ff6b6b/ffffff?text=Nothing"
                 },
                 {
-                    title: "Fix You",
-                    artist: "Coldplay",
-                    url: "https://files.catbox.moe/gzg6tn.mp3",
-                    albumArt: "https://placehold.co/200x200/48dbfb/ffffff?text=Fix+You"
+                    title: "A Thousand Years",
+                    artist: "Christina Perri",
+                    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                    albumArt: "https://placehold.co/200x200/48dbfb/ffffff?text=A+Thousand+Years"
                 },
                 {
-                    title: "Last Night On Earth",
-                    artist: "Green Day",
-                    url: "https://files.catbox.moe/k84qwp.mp3",
-                    albumArt: "https://placehold.co/200x200/f368e0/ffffff?text=Last+Night+On+Earth"
-                },
-                {
-                    title: "I Just Couldnt Save You Tonight",
-                    artist: "Ardhito Pramono ft. Aurélie Moeremans",
-                    url: "https://files.catbox.moe/tsge9e.mp3",
-                    albumArt: "https://placehold.co/200x200/f368e0/ffffff?text=I+Just+Couldnt+Save+You+Tonight"
-                },
-                {
-                    title: "Here, There and Everywhere",
-                    artist: "The Beatles",
-                    url: "https://files.catbox.moe/j3il4q.mp3",
-                    albumArt: "https://placehold.co/200x200/48dbfb/ffffff?text=Here+There+and+Everywhere"
-                },
-                {
-                    title: "Waking Up Together With You",
-                    artist: "Ardhito Pramono",
-                    url: "https://files.catbox.moe/lb0uji.mp3",
-                    albumArt: "https://placehold.co/200x200/ff6b6b/ffffff?text=Waking+Up+Together+With+You"
-                },
-                {
-                    title: "The Only Exception",
-                    artist: "Paramore",
-                    url: "https://files.catbox.moe/b1a1v3.mp3",
-                    albumArt: "https://placehold.co/200x200/48dbfb/ffffff?text=The+Only+Exception"
-                },
+                    title: "I Will Always Love You",
+                    artist: "Whitney Houston",
+                    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                    albumArt: "https://placehold.co/200x200/f368e0/ffffff?text=I+Will+Always"
+                }
             ]
         };
-        
+        // ===================================================================================
         // ====== END OF CUSTOMIZATION AREA ======
-        
+        // ===================================================================================
+
+
         // --- Initialize Lucide Icons ---
         lucide.createIcons();
 
         // --- Heart Cursor Logic (UPDATED) ---
         const heartCursor = document.getElementById('heart-cursor');
         window.addEventListener('mousemove', (e) => {
-            // Use left and top properties for precise positioning
             heartCursor.style.left = e.clientX + 'px';
             heartCursor.style.top = e.clientY + 'px';
         });
@@ -622,11 +562,14 @@
         const galleryLightbox = document.getElementById('gallery-lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeLightboxBtn = document.getElementById('close-lightbox');
+        const loadingModal = document.getElementById('loading-modal');
+        const loadingText = document.getElementById('loading-text');
 
         // --- Apply Customizations ---
         document.querySelector('#unlock-recipient').textContent = CONFIG.recipientName;
         document.querySelector('#unlock-sender').textContent = CONFIG.senderName;
-        const bdayDateFormatted = CONFIG.birthdayDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        // UPDATED: Date format to Indonesian
+        const bdayDateFormatted = CONFIG.birthdayDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
         document.querySelector('#unlock-date').textContent = bdayDateFormatted;
 
         // --- Unlock Logic ---
@@ -649,49 +592,28 @@
         const navIcons = document.querySelectorAll('.nav-icon');
         let activeApp = 'notes';
         let isChatInitialized = false;
-        let isGalleryInitialized = false; 
+        let isGalleryInitialized = false;
 
         function switchApp(appName) {
-            apps.forEach(app => {
-                if (`app-${appName}` === app.id) {
-                    app.classList.remove('hidden');
-                } else {
-                    app.classList.add('hidden');
-                }
-            });
-            navIcons.forEach(icon => {
-                if (`nav-${appName}` === icon.id) {
-                    icon.classList.add('active');
-                } else {
-                    icon.classList.remove('active');
-                }
-            });
+            apps.forEach(app => app.id === `app-${appName}` ? app.classList.remove('hidden') : app.classList.add('hidden'));
+            navIcons.forEach(icon => icon.id === `nav-${appName}` ? icon.classList.add('active') : icon.classList.remove('active'));
             activeApp = appName;
             
-            if (activeApp === 'message' && !isChatInitialized) {
-                initMessageApp();
-                isChatInitialized = true;
-            }
-            // MODIFIED: Only run gallery init once
-            if (activeApp === 'gallery' && !isGalleryInitialized) {
-                initGalleryApp();
-                isGalleryInitialized = true;
-            }
+            if (activeApp === 'message' && !isChatInitialized) { initMessageApp(); isChatInitialized = true; }
+            if (activeApp === 'gallery' && !isGalleryInitialized) { initGalleryApp(); isGalleryInitialized = true; }
             if (activeApp === 'countdown') startCountdown();
             if (activeApp === 'game') initGameApp();
         }
 
         bottomNav.addEventListener('click', (e) => {
             const navButton = e.target.closest('.nav-icon');
-            if (navButton && navButton.dataset.app) {
-                switchApp(navButton.dataset.app);
-            }
+            if (navButton?.dataset.app) switchApp(navButton.dataset.app);
         });
         
         // --- Notes App ---
         const notesContent = document.getElementById('notes-content');
-        const playNotesBtn = document.getElementById('play-notes-button');
-        const skipNotesBtn = document.getElementById('skip-notes-button');
+        const listenNotesBtn = document.getElementById('listen-notes-button');
+        const rewriteNotesBtn = document.getElementById('rewrite-notes-button');
         let typewriterTimeout;
 
         function typeWriter(text, i = 0) {
@@ -704,15 +626,7 @@
         }
         
         function initNotesApp() {
-            notesContent.innerHTML = '<span class="cursor"></span>';
-            playNotesBtn.onclick = () => {
-                clearTimeout(typewriterTimeout);
-                typeWriter(CONFIG.birthdayMessage);
-            };
-            skipNotesBtn.onclick = () => {
-                clearTimeout(typewriterTimeout);
-                notesContent.innerHTML = CONFIG.birthdayMessage.replace(/\n/g, '<br>');
-            };
+             typeWriter(CONFIG.birthdayMessage);
         }
 
         // --- Message App ---
@@ -720,20 +634,16 @@
         const chatInput = document.getElementById('chat-input');
         const chatSendButton = document.getElementById('chat-send-button');
         const sleep = ms => new Promise(res => setTimeout(res, ms));
-        const fixedReplies = ["Hai bub!", "Selamat Ulang Tahun !!! ❤️🎂", "Wishing you all the best things in life.", "Jangan lupa makan!!!"];
+        const fixedReplies = ["Hai sayang!", "Happy birthday to you, my love! ❤️🎂", "Wishing you all the best things in life."];
         let replyCounter = 0;
 
         function addChatMessage(from, text) {
             const msgDiv = document.createElement('div');
-            msgDiv.classList.add('flex', 'items-end', 'gap-2', 'max-w-[80%]', 'opacity-0', 'transition-opacity', 'duration-500');
-            
-            if (from === 'me') {
-                msgDiv.classList.add('self-start');
-                msgDiv.innerHTML = `<div class="w-6 h-6 rounded-full bg-pink-500 flex-shrink-0"></div><div class="bg-gray-700 p-2 rounded-lg rounded-bl-none"><p class="text-sm">${text}</p></div>`;
-            } else {
-                msgDiv.classList.add('self-end');
-                msgDiv.innerHTML = `<div class="bg-lime-400 text-black p-2 rounded-lg rounded-br-none"><p class="text-sm">${text}</p></div><div class="w-6 h-6 rounded-full bg-blue-500 flex-shrink-0"></div>`;
-            }
+            // UPDATED: Bot bubble color changed from gray to dark blue
+            msgDiv.className = `flex items-end gap-2 max-w-[80%] opacity-0 transition-opacity duration-500 ${from === 'me' ? 'self-start' : 'self-end'}`;
+            msgDiv.innerHTML = from === 'me'
+                ? `<div class="w-6 h-6 rounded-full bg-slate-700 flex-shrink-0"></div><div class="bg-slate-800 p-2 rounded-lg rounded-bl-none"><p class="text-sm">${text}</p></div>`
+                : `<div class="bg-blue-600 text-white p-2 rounded-lg rounded-br-none"><p class="text-sm">${text}</p></div><div class="w-6 h-6 rounded-full bg-blue-400 flex-shrink-0"></div>`;
             messageList.appendChild(msgDiv);
             setTimeout(() => msgDiv.classList.remove('opacity-0'), 50);
             messageList.scrollTop = messageList.scrollHeight;
@@ -746,13 +656,11 @@
             chatInput.value = '';
             chatInput.disabled = true;
             chatSendButton.disabled = true;
-
             if (replyCounter < fixedReplies.length) {
                 await sleep(1000);
                 addChatMessage('me', fixedReplies[replyCounter]);
                 replyCounter++;
             }
-            
             chatInput.disabled = false;
             chatSendButton.disabled = false;
             chatInput.focus();
@@ -767,24 +675,20 @@
             chatInput.focus();
         }
         
-        // --- Gallery App (UPDATED) ---
-        // This function now only adds images from the CONFIG array, not the hardcoded ones.
+        // --- Gallery App ---
         function initGalleryApp() {
             const galleryGrid = document.querySelector('#app-gallery .grid');
-            
             CONFIG.galleryImages.forEach(url => {
                 const imgContainer = document.createElement('div');
-                imgContainer.className = "w-full h-full cursor-pointer";
-                imgContainer.innerHTML = `<img src="${url}" alt="Gallery Photo" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-hot-pink transition-all duration-200">`;
-                
+                imgContainer.className = "w-full h-full cursor-none";
+                // UPDATED: Fixed hover border color
+                imgContainer.innerHTML = `<img src="${url}" alt="Gallery Photo" class="w-full h-full object-cover rounded-md border-2 border-gray-600 hover:border-[var(--hot-pink)] transition-all duration-200">`;
                 imgContainer.addEventListener('click', () => openLightbox(url));
-                
                 galleryGrid.appendChild(imgContainer);
             });
         }
         
-        // --- Lightbox Logic (UPDATED) ---
-
+        // --- Lightbox Logic ---
         window.openLightbox = function(url) {
             lightboxImg.src = url;
             galleryLightbox.classList.remove('hidden');
@@ -832,16 +736,13 @@
             artistEl.textContent = track.artist;
             albumArtEl.src = track.albumArt;
             updatePlaylistUI();
-            audioPlayer.oncanplaythrough = () => { if (shouldPlay) playTrack(); };
+            if (shouldPlay) audioPlayer.oncanplaythrough = () => playTrack();
         }
         function playTrack() {
-            const playPromise = audioPlayer.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    playIcon.classList.add('hidden');
-                    pauseIcon.classList.remove('hidden');
-                }).catch(error => console.error("Audio playback error:", error));
-            }
+            audioPlayer.play().then(() => {
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            }).catch(error => console.error("Audio playback error:", error));
         }
         function pauseTrack() {
             audioPlayer.pause();
@@ -852,7 +753,7 @@
             musicPlaylistList.innerHTML = '';
             CONFIG.playlist.forEach((song, index) => {
                 const li = document.createElement('li');
-                li.className = 'p-2 border-b border-gray-700 cursor-pointer';
+                li.className = 'p-2 border-b border-gray-700 cursor-none';
                 li.dataset.index = index;
                 li.innerHTML = `<div>${song.title}</div><div class="artist">${song.artist}</div>`;
                 musicPlaylistList.appendChild(li);
@@ -872,7 +773,7 @@
         });
         musicPlaylistList.addEventListener('click', (e) => {
             const li = e.target.closest('li');
-            if (li && li.dataset.index) {
+            if (li?.dataset.index) {
                 loadTrack(parseInt(li.dataset.index), true);
                 closePlaylistButton.click();
             }
@@ -896,15 +797,16 @@
         loadTrack(currentTrackIndex);
         populatePlaylist();
         
-        // --- Countdown App ---
+        // --- Countdown App (UPDATED) ---
         const daysEl = document.getElementById('days'), hoursEl = document.getElementById('hours'), minutesEl = document.getElementById('minutes'), secondsEl = document.getElementById('seconds'), digitalClockEl = document.getElementById('digital-clock'), currentDateEl = document.getElementById('current-date'), countdownCompleteEl = document.getElementById('countdown-complete');
         let countdownInterval;
         function startCountdown() {
             if (countdownInterval) clearInterval(countdownInterval);
             function update() {
                 const now = new Date();
-                digitalClockEl.textContent = now.toLocaleTimeString('it-IT');
-                currentDateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                // Changed to Indonesian locale
+                digitalClockEl.textContent = now.toLocaleTimeString('id-ID');
+                currentDateEl.textContent = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                 const distance = CONFIG.birthdayDate.getTime() - now.getTime();
                 if (distance < 0) {
                     clearInterval(countdownInterval);
@@ -921,7 +823,6 @@
             countdownInterval = setInterval(update, 1000);
         }
 
-      
         // --- Game App (UPDATED FOR MOBILE) ---
         const canvas = document.getElementById('game-canvas'), ctx = canvas.getContext('2d'), startScreen = document.getElementById('game-start-screen'), gameOverScreen = document.getElementById('game-over-screen'), startButton = document.getElementById('start-game-button'), restartButton = document.getElementById('restart-game-button'), finalScoreEl = document.getElementById('final-score');
         const touchControls = document.getElementById('touch-controls');
@@ -967,8 +868,166 @@
         moveRightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); keys['ArrowRight'] = true; }, { passive: false });
         moveRightBtn.addEventListener('touchend', (e) => { e.preventDefault(); keys['ArrowRight'] = false; });
         shootBtn.addEventListener('touchstart', (e) => { e.preventDefault(); if (gameInterval) shoot(); }, { passive: false });
+
+        
+        // ===================================================================================
+        // ====== ✨ GEMINI API FEATURES ✨ ======
+        // ===================================================================================
+
+        function showLoading(text) {
+            loadingText.textContent = text;
+            loadingModal.classList.remove('hidden');
+            loadingModal.classList.add('flex');
+        }
+
+        function hideLoading() {
+            loadingModal.classList.add('hidden');
+            loadingModal.classList.remove('flex');
+        }
+        
+        // --- Gemini Text Generation (Rewrite) ---
+        rewriteNotesBtn.addEventListener('click', async () => {
+            const originalMessage = notesContent.innerText;
+            showLoading('Rewriting...');
+            
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const systemPrompt = "You are a creative writer specializing in heartfelt messages. Rewrite the following birthday wish to be more poetic and emotional, but keep the original sentiment. Keep it to a similar length.";
+                const userQuery = `Rewrite this: "${originalMessage}"`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+
+                const result = await response.json();
+                const rewrittenText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (rewrittenText) {
+                    typeWriter(rewrittenText);
+                } else {
+                    notesContent.innerText = "Sorry, I couldn't think of a rewrite right now.";
+                }
+            } catch (error) {
+                console.error("Gemini rewrite error:", error);
+                notesContent.innerText = "An error occurred. Please try again later.";
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // --- Gemini Text-to-Speech (Listen) ---
+        listenNotesBtn.addEventListener('click', async () => {
+            const messageToRead = notesContent.innerText;
+            showLoading('Generating audio...');
+            
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{
+                        parts: [{ text: `Read this birthday message aloud in a warm, friendly voice: ${messageToRead}` }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                    },
+                    model: "gemini-2.5-flash-preview-tts"
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+                
+                const result = await response.json();
+                const audioData = result?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+
+                if (audioData) {
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    // Standard sample rate for high-quality speech
+                    const wavBlob = pcmToWav(pcm16, 24000); 
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    new Audio(audioUrl).play();
+                } else {
+                    throw new Error("No audio data received from API.");
+                }
+
+            } catch (error) {
+                console.error("Gemini TTS error:", error);
+                alert("Sorry, could not generate audio at this time.");
+            } finally {
+                hideLoading();
+            }
+        });
+
+
+        // --- Audio Conversion Helper Functions ---
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcmData, sampleRate) {
+            const numChannels = 1;
+            const bitsPerSample = 16;
+            const byteRate = sampleRate * numChannels * (bitsPerSample / 8);
+            const blockAlign = numChannels * (bitsPerSample / 8);
+            const dataSize = pcmData.length * (bitsPerSample / 8);
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            // RIFF header
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+            // fmt chunk
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true); // chunk size
+            view.setUint16(20, 1, true); // audio format (1 = PCM)
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, bitsPerSample, true);
+            // data chunk
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            // Write PCM data
+            for (let i = 0; i < pcmData.length; i++) {
+                view.setInt16(44 + i * 2, pcmData[i], true);
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+        
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
     });
     </script>
 
 </body>
 </html>
+

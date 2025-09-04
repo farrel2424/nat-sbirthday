@@ -928,7 +928,7 @@
         const moveLeftBtn = document.getElementById('move-left-btn');
         const moveRightBtn = document.getElementById('move-right-btn');
         const shootBtn = document.getElementById('shoot-btn');
-        let player, bullets, enemies, score, lives, gameInterval = null, keys = {};
+        let player, bullets, enemies, score, lives, gameInterval = null, keys = {}, touchMoveInterval = null;
         function initGameApp() { const p = canvas.parentElement; canvas.width = p.clientWidth; canvas.height = p.clientHeight; }
         function setupGame() { score = 0; lives = 3; player = { x: canvas.width/2 - 15, y: canvas.height - 100, width: 30, height: 20, speed: 5 }; bullets = []; enemies = []; spawnEnemy(); }
         function spawnEnemy() { const s = 20 + Math.random() * 10, x = Math.random() * (canvas.width - s); enemies.push({ x: x, y: -s, width: s, height: s, speed: 1 + Math.random() * 2 }); }
@@ -954,18 +954,44 @@
         }
         function shoot() { bullets.push({ x: player.x + player.width/2 - 2.5, y: player.y, width: 5, height: 10, speed: 7 }); }
         function startGame() { if(gameInterval) return; startScreen.classList.add('hidden'); gameOverScreen.classList.add('hidden'); touchControls.classList.remove('hidden'); setupGame(); gameInterval = setInterval(gameLoop, 1000/60); }
-        function gameOver() { clearInterval(gameInterval); gameInterval = null; gameOverScreen.classList.remove('hidden'); gameOverScreen.classList.add('flex'); touchControls.classList.add('hidden'); }
+        function gameOver() {
+            clearInterval(gameInterval);
+            if (touchMoveInterval) clearInterval(touchMoveInterval);
+            touchMoveInterval = null;
+            gameInterval = null;
+            gameOverScreen.classList.remove('hidden');
+            gameOverScreen.classList.add('flex');
+            touchControls.classList.add('hidden');
+        }
         startButton.addEventListener('click', startGame);
         restartButton.addEventListener('click', startGame);
         window.addEventListener('keydown', (e) => { keys[e.code] = true; if (e.code === 'Space' && activeApp === 'game' && gameInterval) { e.preventDefault(); shoot(); } });
         window.addEventListener('keyup', (e) => { keys[e.code] = false; });
         
-        // --- Touch Control Listeners ---
+        // --- Touch Control Listeners (REFACTORED) ---
+        function startMoving(direction) {
+            if (touchMoveInterval) clearInterval(touchMoveInterval);
+            touchMoveInterval = setInterval(() => {
+                if (direction === 'left' && player.x > 0) {
+                    player.x -= player.speed;
+                } else if (direction === 'right' && player.x < canvas.width - player.width) {
+                    player.x += player.speed;
+                }
+            }, 1000 / 60);
+        }
+
+        function stopMoving() {
+            clearInterval(touchMoveInterval);
+            touchMoveInterval = null;
+        }
+
         canvas.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
-        moveLeftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); keys['ArrowLeft'] = true; }, { passive: false });
-        moveLeftBtn.addEventListener('touchend', (e) => { e.preventDefault(); keys['ArrowLeft'] = false; });
-        moveRightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); keys['ArrowRight'] = true; }, { passive: false });
-        moveRightBtn.addEventListener('touchend', (e) => { e.preventDefault(); keys['ArrowRight'] = false; });
+        moveLeftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startMoving('left'); }, { passive: false });
+        moveLeftBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopMoving(); });
+        moveLeftBtn.addEventListener('touchcancel', (e) => { e.preventDefault(); stopMoving(); });
+        moveRightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startMoving('right'); }, { passive: false });
+        moveRightBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopMoving(); });
+        moveRightBtn.addEventListener('touchcancel', (e) => { e.preventDefault(); stopMoving(); });
         shootBtn.addEventListener('touchstart', (e) => { e.preventDefault(); if (gameInterval) shoot(); }, { passive: false });
     });
     </script>
